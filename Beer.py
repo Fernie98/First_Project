@@ -74,8 +74,11 @@ if __name__ == "__main__":
 
     print(want)
 
-    for key in want.keys():
+    for key, value in want.keys():
+        print(f'This is keys {key}')
+        print(f'This is Values {value}')
         if key == 'transcription':
+            print(f'this is the key {key} and this is the {value}')
             #@todo  have to find a way to read the transcription to be able to compare to 'beer'
 
            #@todo show image of beer me brother
