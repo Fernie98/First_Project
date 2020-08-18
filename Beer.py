@@ -1,6 +1,8 @@
 import speech_recognition as sr
 import time
-
+import os
+import random
+from PIL import Image
 
 def recognize_speech_from_mic(recognizer, microphone):
     """Transcribe speech from recorded from `microphone`.
@@ -50,36 +52,55 @@ def recognize_speech_from_mic(recognizer, microphone):
     return response
 
 
-
 if __name__ == "__main__":
-    # set the list of words, maxnumber of guesses, and prompt limit
-    WORDS = ["beer", "me"]
-    # NUM_GUESSES = 3
-    # PROMPT_LIMIT = 5
+    WORDS = ["beer", 'vodka', 'rum', 'alcohol', 'tequila', 'absinthe', 'draft', "wine"]
+    bad_word = ['Seltzer', 'white']
 
     # create recognizer and mic instances
     recognizer = sr.Recognizer()
     microphone = sr.Microphone()
-
-    # get a random word from the list
-    # word = random.choice(WORDS)
 
     # format the instructions string
     instructions = (f'Tell me what you want is it a {WORDS}')
     # show instructions and wait 3 seconds before starting the game
     print(instructions)
     time.sleep(3)
-    print('speak now or forever hold your peace')
+    print('So what will it be?')
     want = recognize_speech_from_mic(recognizer, microphone)
 
-    print(want)
+    if want["success"] and type(want['error']) != str:
+        print('This is coming into first if')
+        word_list = want['transcription'].split()
+        for i in word_list:
+            if i in WORDS:
+                print(f"You may get a {i} good Sir!")
+                path = random.choice(os.listdir("C:\\Users\Ferni\\Documents\\python_projects\\First_Project\\images\\good\\"))
+                print('This is the path: ', path)
+                im = Image.open("C:\\Users\Ferni\\Documents\\python_projects\\First_Project\\images\\good\\" + str(path))
+                im.show()
 
-    for key, value in want.keys():
-        print(f'This is keys {key}')
-        print(f'This is Values {value}')
-        if key == 'transcription':
-            print(f'this is the key {key} and this is the {value}')
-            #@todo  have to find a way to read the transcription to be able to compare to 'beer'
 
-           #@todo show image of beer me brother
+            elif i in bad_word:
+                print(f'You disgust me be gone!')
+                path = random.choice(
+                    os.listdir("C:\\Users\Ferni\\Documents\\python_projects\\First_Project\\images\\bad\\"))
+                print('This is the path: ', path)
+                im = Image.open("C:\\Users\Ferni\\Documents\\python_projects\\First_Project\\images\\bad\\" + str(path))
+                im.show()
 
+
+            else:
+                print(f"You shall not have a beer! For you wanted {i}")
+                path = random.choice(
+                    os.listdir("C:\\Users\Ferni\\Documents\\python_projects\\First_Project\\images\\confused\\"))
+                print('This is the path: ', path)
+                im = Image.open(
+                    "C:\\Users\Ferni\\Documents\\python_projects\\First_Project\\images\\confused\\" + str(path))
+                im.show()
+
+    else:
+        path = random.choice(os.listdir("C:\\Users\Ferni\\Documents\\python_projects\\First_Project\\images\\error\\"))
+        print('This is the path: ', path)
+        im = Image.open("C:\\Users\Ferni\\Documents\\python_projects\\First_Project\\images\\error\\" + str(path))
+        im.show()
+        print("Could not hear you loser")
