@@ -4,6 +4,7 @@ import os
 import random
 from PIL import Image
 
+
 def recognize_speech_from_mic(recognizer, microphone):
     """Transcribe speech from recorded from `microphone`.
 
@@ -54,14 +55,14 @@ def recognize_speech_from_mic(recognizer, microphone):
 
 if __name__ == "__main__":
     WORDS = ["beer", 'vodka', 'rum', 'alcohol', 'tequila', 'absinthe', 'draft', "wine"]
-    bad_word = ['Seltzer', 'white']
+    bad_word = ['seltzer', 'white', 'tea', 'hat', 'claw']
 
     # create recognizer and mic instances
     recognizer = sr.Recognizer()
     microphone = sr.Microphone()
 
     # format the instructions string
-    instructions = (f'Tell me what you want is it a {WORDS}')
+    instructions = f'Tell me what you want is it a {WORDS}'
     # show instructions and wait 3 seconds before starting the game
     print(instructions)
     time.sleep(3)
@@ -74,9 +75,11 @@ if __name__ == "__main__":
         for i in word_list:
             if i in WORDS:
                 print(f"You may get a {i} good Sir!")
-                path = random.choice(os.listdir("C:\\Users\Ferni\\Documents\\python_projects\\First_Project\\images\\good\\"))
+                path = random.choice(os.listdir(
+                    "C:\\Users\\Ferni\\Documents\\python_projects\\First_Project\\images\\good\\"))
                 print('This is the path: ', path)
-                im = Image.open("C:\\Users\Ferni\\Documents\\python_projects\\First_Project\\images\\good\\" + str(path))
+                im = Image.open(
+                    "C:\\Users\\Ferni\\Documents\\python_projects\\First_Project\\images\\good\\" + str(path))
                 im.show()
 
 
